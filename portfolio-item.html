@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>DevTim(rename) Portfolio Website</title> <!--Rename site title-->
+        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" 
+              integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" 
+              crossorigin="anonymous" 
+        />
+        <!-- Update these with your own fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" 
+              rel="stylesheet"
+        >
+        <link rel='stylesheet' href='css/style.css'>
+
+    </head>
+    <body>
+        <header>
+            <div class='logo'>
+                <img src='img/devjane.png' alt=''> <!--Replace logo (<devjane>)-->
+            </div>
+                <button class='navToggle' aria-label='toggle navigation'>
+                    <span class='hamburger'></span>
+                </button>
+                <nav class='nav'>
+                    <ul class='navList'>
+                        <li class='navItem'><a href='index.html' class='navLink'>Home</a></li>
+                        <li class='navItem'><a href='index.html#projects' class='navLink'>Technical Projects</a></li>
+                        <li class='navItem'><a href='index.html#artwork' class='navLink'>Artwork</a></li>
+                        <li class='navItem'><a href='index.html#about' class='navLink'>About me</a></li>
+                    </ul>
+                </nav>
+        </header>
+
+        <!--Portfolio Item-->
+        <section class='intro'>
+            <h1 class='title titleIntro'>
+                The title <strong>of my project</strong>
+            </h1>
+            <p class='subtitle subIntro'>a short subtitle</p>
+            <img class='introImage' src='img/portfolio-01.jpg' alt='a screenshot of Project 1'> <!--Replace with project pic-->
+        </section>
+
+        <div class='portfolioItemIndividual'>
+            <p>Voluptatibus, soluta blanditiis! Incidunt ea unde itaque illo molestiae eligendi sint culpa nobis voluptas sapiente voluptate, magnam ipsum eius earum?</p>
+            <img src='img/portfolio-details.jpg' alt='project inset screenshot' class='insetImage'> <!--Replace with project pic-->
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe et amet tenetur! Fugit sequi optio corrupti fugiat ducimus consequatur incidunt?</p>
+            <p>Voluptatibus, soluta blanditiis! Incidunt ea unde itaque illo molestiae eligendi sint culpa nobis voluptas sapiente voluptate, magnam ipsum eius earum?</p>
+        </div>
+
+        <!--Footer-->
+        <footer class='footer'>
+            <a class='footerLink' href='mailto:tfmcmahon@gmail.com'>tfmcmahon@gmail.com</a>
+            <ul class='socialList'>
+                <li class='socialListItem'>
+                    <a class='socialListLink' href='https://linkedin.com'>
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a class='socialListLink' href='https://github.com'>
+                        <i class="fab fa-github-square"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a class='socialListLink' href='https://codepen.com'>
+                        <i class="fab fa-codepen"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a class='socialListLink'href='https://glitch.com'>
+                        <i class="fas fa-fish"></i>
+                    </a>
+                </li>
+            </ul>
+        </footer>
+
+        <script src='js/index.js'></script>
+
+    </body>
+    </html>
+</html>
