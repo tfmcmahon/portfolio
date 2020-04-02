@@ -96,7 +96,8 @@
     ...
 </code>
             </pre>
-            <p>... it also shows the OAuth2 token management. More on that later. And here's the action that it uses (this code has been truncated for brevity, see the 
+            <p>... it also shows the OAuth2 token management. More on that later. 
+                And here's the action that it uses (this code has been truncated for brevity, see the 
                 <a 
                     className='headerGithub' 
                     href='https://github.com/tfmcmahon/twitch-api'
@@ -134,7 +135,7 @@
                 When it receives an API response, it extracts game and user -- or streamer, 
                 otherwise we'd be dealing with streams and streamers -- id numbers. 
                 It then pushes out another pair of API calls for the respective data categories. 
-                I tried to keep the API calls to a minimum to be extra sure we that stay within Twitch's call limits. 
+                I tried to keep the API calls to a minimum to be extra sure that we stay within Twitch's call limits. 
                 Lastly, the reducers store all of the data in a global state.
             </p>
             <p>
