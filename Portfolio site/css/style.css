@@ -620,6 +620,11 @@ code {
     opacity: .75;
 }
 
+.portfolioItemList {
+    width: 800px;
+    margin: auto;
+}
+
 /* SVGs */
 
 .transitionImageArtTop {
