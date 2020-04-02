@@ -215,6 +215,7 @@ header {
 }
 
 .navToggle {
+    margin-top: 13px;
     padding: .5em;
     background: transparent;
     border: 0;
@@ -255,8 +256,8 @@ header {
 .hamburger::before,
 .hamburger::after {
     background: var(--clr-neighbor2);
-    width: 2.25em;
-    height: 5px;
+    width: 2.5em;
+    height: 7px;
     border-radius: 1em;
     transition: transform 250ms ease-in-out;
 }
@@ -271,8 +272,8 @@ header {
    
 }
 
-.hamburger::before { top: 10px; }
-.hamburger::after { bottom: 10px; }
+.hamburger::before { top: 12px; }
+.hamburger::after { bottom: 12px; }
 
 /* Intro section */
 
