@@ -2,6 +2,7 @@
 <html lang='en'>
     <head>
         <meta charset='UTF-8'>
+        <link rel="icon" href="./Portfolio site/img/favicon.ico" />
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <title>Tim McMahon's portfolio (Twitch Viewer)</title> 
         <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
@@ -9,7 +10,6 @@
               integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" 
               crossorigin="anonymous" 
         />
-        <!-- Update these with your own fonts -->
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" 
               rel="stylesheet"
         >
@@ -19,7 +19,10 @@
     <body>
         <header>
             <div class='logo'>
-                <img src='./Portfolio site/img/TM_logo.svg' alt='' width='50px'> <!--Replace logo (<devjane>)-->
+                <a class='logoLink' href='index.html'>
+                    <img class='logoImage' src='./Portfolio site/img/TM_logo.svg' alt='' width='50px'>
+                </a>
+            </div>
             </div>
                 <button class='navToggle' aria-label='toggle navigation'>
                     <span class='hamburger'></span>
@@ -43,7 +46,7 @@
                 </a>
             </h1>
             <p class='subtitle subIntro'>made with React hooks</p>
-            <img class='introImage' src='./Portfolio site/img/portfolio-01.jpg' alt='a screenshot of Project 1'> <!--Replace with project pic-->
+            <img class='introImage' src='./Portfolio site/img/portfolio-01.jpg' alt='a screenshot of Project 1'>
         </section>
 
         <div class='portfolioItemIndividual'>
@@ -52,7 +55,7 @@
                 Welcome to my <a href="https://tfmcmahon.github.io/twitch-api" target='_blank'>Twitch Viewer App</a> 
                 write-up! Before starting the project, I wrote down a few goals that I wanted to accomplish:
             </p>
-            <ul>
+            <ul class='portfolioItemList'>
                 <li>Familiarize myself with and implement React hooks.</li>
                 <li>Utilize a third party API to practice reading and understanding reference documentation.</li>
                 <li>Build a front-end application.</li>
@@ -74,7 +77,7 @@
             </p>
             <h3 class="writeUpHeader">Challenges</h3>
             <p>
-                The first consideration was getting a handle on React hooks. 
+                The baseline for this project was getting a handle on React hooks. 
                 I've worked with class components on another project, 
                 so I spent some time adapting previously written code into hooks to get my bearings. 
                 Meanwhile I am getting my actions and reducers set up via Redux to hit and store API responses.
@@ -94,7 +97,8 @@
     ...
 </code>
             </pre>
-            <p>... it also shows the OAuth2 token management. More on that later. And here's the action that it uses (this code has been truncated for brevity, see the 
+            <p>... it also shows the OAuth token management. More on that later. 
+                And here's the action that it uses (this code has been truncated for brevity, see the 
                 <a 
                     className='headerGithub' 
                     href='https://github.com/tfmcmahon/twitch-api'
@@ -132,7 +136,7 @@
                 When it receives an API response, it extracts game and user -- or streamer, 
                 otherwise we'd be dealing with streams and streamers -- id numbers. 
                 It then pushes out another pair of API calls for the respective data categories. 
-                I tried to keep the API calls to a minimum to be extra sure we that stay within Twitch's call limits. 
+                I tried to keep the API calls to a minimum to be extra sure that we stay within Twitch's call limits. 
                 Lastly, the reducers store all of the data in a global state.
             </p>
             <p>
@@ -165,8 +169,8 @@
 </code>
             </pre>
             <p>
-                ... back to our component. Twitch redirects the user back to us along with an access token 
-                which is a URL fragment:
+                Twitch then redirects the user back to us along with an access token 
+                which is a URL fragment (back inside of our component):
             </p>
             <pre>
 <code><span class="function">useEffect</span>(() <span class="const">=></span> {
@@ -199,7 +203,7 @@
                 let's build functionality to allow the user to search Twitch.
                 Our key criteria is that we need to send an exact match in order for Twitch to return results.
                 We can't shape a user's input much, 
-                but what if we implement some kind of suggestion feature along with the text field so that our user can at least be lazy. 
+                but maybe we can implement some kind of suggestion feature along with the text field so that our user can at least be lazy. 
             </p> 
             <p>
                 In comes <a 
@@ -207,7 +211,7 @@
                 rel='noopener noreferrer' 
                 target='_blank'>React Autosuggest</a> - a nifty tool that allows us to display suggestions based on a user's partial input. 
                 All we need is an object or array with our potential suggestions. 
-                After considering our options, I decided to build a primative database scraper for both game titles and streamers"
+                After considering our options, I decided to build a primative database scraper for both game titles and streamers:
             </p>
             <pre>
 <code><span class="logic">export</span> <span class="const">const</span> <span class="function">gameScrape</span> = () <span class="const">=></span> <span class="variable">dispatch</span> <span class="const">=></span> {
@@ -226,8 +230,8 @@
             <p>
                 Voila! We can run this a few times while
                 recording the results and adding the pagination key onto each subsequent request. 
-                Our game suggestion array now has the top thousand games. 
-                For the streamer suggestions, I gathered about fifteen hundred of the top streamers at different times of the day. 
+                After a few minutes, we have populated our game suggestion array with the top thousand games. 
+                For the streamer suggestions, I gathered about fifteen-hundred of the top streamers at different times of the day. 
             </p>
             <img class='insetImage' src='./Portfolio site/img/portfolio-01-inset.jpg' alt='A screenshot of the project'>
             <br/>
