@@ -3,13 +3,12 @@
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>DevTim(rename) Portfolio Website</title> <!--Rename site title-->
+        <title>Tim McMahon's portfolio</title>
         <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" 
               integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" 
               crossorigin="anonymous" 
         />
-        <!-- Update these with your own fonts -->
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" 
               rel="stylesheet"
         >
@@ -19,7 +18,7 @@
     <body>
         <header id='home'>
             <div class='logo'>
-                <img src='./Portfolio site/img/tfmcmahonLogo.svg' alt='' width='300px'> <!--Replace logo (<devjane>)-->
+                <img src='./Portfolio site/img/TM_logo.svg' alt='' width='50px'>
             </div>
                 <button class='navToggle' aria-label='toggle navigation'>
                     <span class='hamburger'></span>
@@ -40,13 +39,13 @@
                 Hi, I'm <strong>Tim McMahon</strong>
             </h1>
             <p class='subtitle subIntro'>full-stack dev</p>
-            <img class='introImage' src='./Portfolio site/img/dev-jane-01.jpg' alt='a profile picture of Tim McmMhon'> <!--Replace with profile pic-->
+            <img class='introImage' src='./Portfolio site/img/dev-jane-01.jpg' alt='a profile picture of Tim McmMhon'>
         </section>
 
 
         <!--Technical Projects-->
         <section class='projects' id='projects'>
-            <h2 class='title titleTechnicalProjects'>What I've made</h2>
+            <h2 class='title titleTechnicalProjects'>What I know</h2>
             <div class='technicalProjects'>
                 <div class='technicalProject'>
                     <h3>Project 1</h3>
@@ -86,12 +85,12 @@
 
         <!--Artwork-->
         <section class='art' id='artwork'>
-            <h2 class='title titleArtwork'>Artwork</h2>
-            <p class='subtitle subArtwork'>A selection of hyper-real renders</p>
+            <h2 class='title titleArtwork'>What I've Made</h2>
+            <p class='subtitle subArtwork'>A selection of technical projects and hyper-real renders</p>
 
             <div class='portfolio'>
                 <!--Portfolio item 1-->
-                <a href='portfolio-item.html' class='portfolioItem'>
+                <a href='portfolio-item-twitch-viewer.html' class='portfolioItem'>
                     <img src='./Portfolio site/img/portfolio-01.jpg' alt='' class='portfolioImage'>
                 </a>
 
@@ -169,7 +168,7 @@
                     <a 
                         class='socialListLink' 
                         href='https://www.linkedin.com/in/tfmcmahon/'
-                        rel='noopener' 
+                        rel='noopener noreferrer' 
                         target='_blank'
                     >
                         <i class="fab fa-linkedin"></i>
@@ -178,9 +177,9 @@
 
                 <li class='socialListItem'>
                     <a 
-                        class='socialListLink' 
+                        class='socialListLink'
                         href='https://github.com/tfmcmahon'
-                        rel='noopener' 
+                        rel='noopener noreferrer'
                         target='_blank'
                     >
                         <i class="fab fa-github-square"></i>
@@ -189,9 +188,9 @@
 
                 <li class='socialListItem'>
                     <a 
-                        class='socialListLink' 
+                        class='socialListLink'
                         href='https://codepen.io/tfmcmahon'
-                        rel='noopener' 
+                        rel='noopener noreferrer'
                         target='_blank'
                     >
                         <i class="fab fa-codepen"></i>
@@ -200,9 +199,9 @@
 
                 <li class='socialListItem'>
                     <a 
-                        class='socialListLink'
+                        class='socialListLink' 
                         href='https://glitch.com/@tfmcmahon'
-                        rel='noopener' 
+                        rel='noopener noreferrer' 
                         target='_blank'
                     >
                         <i class="fas fa-fish"></i>
