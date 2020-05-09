@@ -29,7 +29,7 @@
 
     --bs: 0.25em 0.25em 0.75em rgba(0,0,0,.35), /*'bs' stands for box-shadow*/
           0.125em 0.125em 0.25em rgba(0,0,0,.25);
-    --bw: 0em 0em 0.15em 0em;
+    --bw: 1px 1px 3px 1px;
 
 }
 
@@ -112,7 +112,10 @@ strong {
     border-radius: .25em;
     font-weight: var(--fw-bold);
     transition: transform 200ms ease-in-out;
-    margin: 2em;
+    margin: 2em auto;
+    border: 1px solid var(--clr-neighbor2);
+    border-bottom-width: 2px;
+    width: 11em;
 }
 
 .btn:hover {
@@ -283,7 +286,7 @@ header {
 
 .introImage, 
 .aboutMeImage {
-    border: solid var(--clr-neighbor3);
+    border: solid var(--clr-dark);
     border-width: var(--bw);
     border-radius: 0.5em;
     box-shadow: var(--bs);
@@ -358,6 +361,9 @@ header {
 }
 
 .technicalProject {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     max-width: 500px;
     margin: 0 auto;
     margin-bottom: 3em
@@ -541,7 +547,8 @@ pre code {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: -3em;
-    white-space: pre-wrap;
+    overflow-x: scroll;
+    /* white-space: pre-wrap; */
 }
 
 code {
@@ -588,6 +595,14 @@ code {
 
 .html {
     color: gray;
+}
+
+.comment {
+    color: rgb(96, 175, 113);
+}
+
+.react {
+    color: rgb(98, 219, 203)
 }
 
 .horizontalRule {

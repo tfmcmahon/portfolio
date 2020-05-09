@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <link rel="icon" href="./Portfolio site/img/favicon.ico" />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Tim McMahon's portfolio (Poster Shop)</title> 
+        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" 
+              integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" 
+              crossorigin="anonymous" 
+        />
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" 
+              rel="stylesheet"
+        >
+        <link rel='stylesheet' href='./Portfolio site/css/style.css'>
+
+    </head>
+    <body>
+        <header>
+            <div class='logo'>
+                <a class='logoLink' href='index.html'>
+                    <img class='logoImage' src='./Portfolio site/img/tm-logo.svg' alt='' width='50px'>
+                </a>
+            </div>
+            </div>
+                <button class='navToggle' aria-label='toggle navigation'>
+                    <span class='hamburger'></span>
+                </button>
+                <nav class='nav'>
+                    <ul class='navList'>
+                        <li class='navItem'><a href='index.html' class='navLink'>Home</a></li>
+                        <li class='navItem'><a href='index.html#projects' class='navLink'>Technical Projects</a></li>
+                        <li class='navItem'><a href='index.html#artwork' class='navLink'>Artwork</a></li>
+                        <li class='navItem'><a href='index.html#about' class='navLink'>About me</a></li>
+                    </ul>
+                </nav>
+        </header>
+
+        <!--Portfolio Item-->
+        <section class='intro'>
+            <h1 class='title titleIntro'>
+                Poster Shop
+                <a class="projectLink" href="https://gentle-temple-11675.herokuapp.com" rel='noopener noreferrer' target='_blank'>
+                    <strong>An e-commerce app</strong>
+                </a>
+            </h1>
+            <p class='subtitle subIntro'>tested with jest</p>
+            <img class='introImage' src='./Portfolio site/img/portfolio-06.jpg' alt='a screenshot of Project 2'>
+        </section>
+
+        <div class='portfolioItemIndividual'>
+            <h3 class="writeUpHeader">Overview</h3>
+            <p>
+                I'm back again with a write-up for my second full-stack project, the
+                <a href="https://gentle-temple-11675.herokuapp.com" target='_blank'>Poster Shop</a> app!
+                The impetus for this project was to practice making another full-stack project while integrating a payment processor.
+            </p>
+            <p>
+                Sounds like we're making an E-commerce app! Let's kick it off with some project goals:
+            </p>
+            <ul class='portfolioItemList'>
+                <li>Implement a third-party payment system.</li>
+                <li>Write unit and integration tests.</li>
+                <li>Create a project without using Redux.</li>
+                <li>Up my code commenting game.</li>
+            </ul>
+            <p>
+                At the outset of this project I was primarily focused on building a functional digital store,
+                rather than with the specific product(s). Once the meat and potatoes of the shop was in place, 
+                I searched for things that could be easily divided up into categories to use as a product -- 
+                I remembered stumbling upon
+                <a 
+                href='https://theposterdb.com/' 
+                target='_blank' 
+                rel='noopener noreferrer' >
+                    The Poster Database</a> a year or so ago while surfing the internet. Perfect.
+
+            </p>
+            <h3 class="writeUpHeader">Challenges</h3>
+            <p>
+                I've heard good things about Stripe, but during my research for this project I found Braintree which has PayPal 
+                integration. Having additional methods of accepting payment is always helpful. 
+                I believe it also works well for non US based customers.
+                On the other hand, I'm not the biggest fan of PayPal's fees. Something to think about.
+                In any case, a customer base is not something that I possess, but here's hoping!
+            </p>
+            <p>
+                Let's give Braintree a shot. First we need to generate a token so that we can communicate with Braintree:
+            </p>
+            <pre>
+<code><span class="const">const</span> <span class="react">gateway</span> = <span class="function">connect</span>({
+    <span class="variable">environment: Environment</span>[<span class="plainText">'Sandbox'</span>],
+    <span class="variable">merchantId: process</span>.<span class="variable">env</span>.<span class="variable">BRAINTREE_MERCHANT_ID</span>,
+    <span class="variable">publicKey: process</span>.<span class="variable">env</span>.<span class="variable">BRAINTREE_PUBLIC_KEY</span>,
+    <span class="variable">privateKey: process</span>.<span class="variable">env</span>.<span class="variable">BRAINTREE_PRIVATE_KEY</span>
+})
+        
+<span class="react">exports</span>.<span class="function">generateToken</span> = <span class="const">async</span> (<span class="variable">req</span>, <span class="variable">res</span>) <span class="const">=></span> {
+    <span class="comment">//get a braintree token, gateway setup per braintree docs</span>
+    <span class="logic">try</span> {
+        <span class="const">const</span> <span class="variable">token</span> = <span class="logic">await</span> <span class="variable">gateway</span>.<span class="variable">clientToken</span>.<span class="function">generate</span>({})
+        <span class="variable">res</span>.<span class="function">status</span>(<span class="number">200</span>).<span class="function">send</span>(<span class="variable">token</span>)
+    } <span class="logic">catch</span> (<span class="variable">err</span>) {
+        <span class="variable">res</span>.<span class="function">status</span>(<span class="number">500</span>).<span class="function">send</span>(<span class="variable">err</span>)
+    }
+}
+</code>
+            </pre>
+            <p>
+                Once we have a token, we can head over to our corresponding front-end methods to see what's happening.
+                Here are two chunks of code that I put together with lots of help from Braintree's documentation and an 
+                <a 
+                href='https://www.npmjs.com/package/braintree-web-drop-in-react' 
+                target='_blank' 
+                rel='noopener noreferrer' >
+                NPM package</a> 
+                called braintree-web-drop-in. The &ltDropIn/> component displays the payment portal. Its on-click method packages up 
+                the entered payment info and sends it to the back-end to interact with Braintree. If payment succeeds, the method creates an 
+                order which is stored in the user's history. Any ellipses mean that the code has been truncated for brevity (see the 
+                <a 
+                    className='headerGithub' 
+                    href='https://github.com/tfmcmahon/ecommerce'
+                    rel='noopener noreferrer' 
+                    target='_blank'
+                >
+                    repository
+                </a> 
+                for the full code):
+            </p>
+            <pre>
+<code><span class="const">const</span> <span class="function">showDropIn</span> = () <span class="const">=></span> (
+    ...
+    <span class="html">&lt</span><span class="const">div</span><span class="html">></span>
+        <span class="html">&lt</span><span class="react">DropIn </span>
+            <span class="variable">options</span>=<span class="const">{</span>{ 
+                <span class="variable">authorization: values</span>.<span class="variable">clientToken</span>,
+                <span class="variable">paypal:</span> {
+                    <span class="variable">flow:</span> <span class="plainText">'vault'</span>
+                }
+            }<span class="const">}</span>
+            <span class="variable">onInstance</span>=<span class="const">{</span><span class="variable">instance</span> <span class="const">=></span> (<span class="variable">values</span>.<span class="variable">instance</span> = <span class="variable">instance</span>)<span class="const">}</span>
+        <span class="html">/></span>
+        <span class="html">&lt</span><span class="const">button</span> 
+            <span class="variable">className</span>=<span class="plainText">'payButton'</span>
+            <span class="variable">onClick</span>=<span class="const">{</span><span class="function">sendPayment</span><span class="const">}</span>
+        <span class="html">></span>
+            Pay
+        <span class="html">&lt/</span><span class="const">button</span><span class="html">></span>
+    <span class="html">&lt</span><span class="const">div</span><span class="html">></span>
+    ...
+)
+    
+<span class="const">const</span> <span class="function">sendPayment</span> = () <span class="const">=></span> {
+    <span class="comment">//Validate address</span>
+    <span class="logic">if</span> (!<span class="variable">values</span>.<span class="variable">addressSuccess</span>) {
+        <span class="function">setError</span>(<span class="plainText">'Please fill out the shipping fields'</span>)
+    } <span class="logic">else</span> {
+        <span class="function">setValues</span>({
+            ...<span class="variable">values</span>,
+            <span class="variable">loading:</span> <span class="const">true</span>
+        })
+        <span class="comment">//Send payment info to the back-end</span>
+        <span class="const">let</span> <span class="variable">nonce</span>
+        <span class="variable">values</span>.<span class="variable">instance</span>.<span class="function">requestPaymentMethod</span>()
+            .<span class="function">then</span>(<span class="variable">data</span> <span class="const">=></span> {
+                <span class="variable">nonce</span> = <span class="variable">data</span>.<span class="variable">nonce</span>
+                <span class="comment">//once we have the nonce (card type, card number, etc)</span>
+                <span class="comment">//send it as paymentMethodNonce along with the cart total</span>
+                <span class="const">const</span> <span class="variable">paymentData</span> = {
+                    <span class="variable">paymentMethodNonce: nonce</span>,
+                    <span class="variable">amount:</span> <span class="function">getCheckoutTotal</span>()
+                }
+                <span class="function">processPayment</span>(<span class="variable">userId</span>, <span class="variable">token</span>, <span class="variable">paymentData</span>)
+                    .<span class="function">then</span>(<span class="variable">response</span> <span class="const">=></span> {
+                        <span class="comment">//store the order data in an object</span>
+                        <span class="const">const</span> <span class="variable">orderData</span> = {
+                            <span class="variable">products: products</span>,
+                            <span class="variable">transactionId: response</span>.<span class="variable">data</span>.<span class="variable">transaction</span>.<span class="variable">id</span>,
+                            <span class="variable">amount: response</span>.<span class="variable">data</span>.<span class="variable">transaction</span>.<span class="variable">amount</span>,
+                            <span class="variable">address: address</span>
+                        }
+                        <span class="comment">//send the order data to the backend</span>
+                        <span class="function">createOrder</span>(<span class="variable">userId</span>, <span class="variable">token</span>, <span class="variable">orderData</span>)
+                            .<span class="function">then</span>(<span class="variable">response</span> <span class="const">=></span> {
+                                <span class="function">emptyCart</span>(() <span class="const">=></span> {
+                                    <span class="comment">//run useEffect in parent Component so that the emptied cart updates</span>
+                                    <span class="function">setRun</span>(!<span class="variable">run</span>) 
+                                    <span class="function">setValues</span>({
+                                        ...<span class="variable">values</span>,
+                                        <span class="variable">success:</span> <span class="const">true</span>,
+                                        <span class="variable">loading:</span> <span class="const">false</span>
+                                    })
+                                })
+                            }).<span class="function">catch</span>(<span class="variable">error</span> <span class="const">=></span> {
+                                <span class="variable">console</span>.<span class="function">log</span>(<span class="variable">error</span>)
+                                <span class="function">setValues</span>({
+                                    ...<span class="variable">values</span>,
+                                    <span class="variable">loading:</span> <span class="const">false</span>
+                                })
+                            })
+                    })
+            ...
+    ...
+}
+</code>
+            </pre>
+            <p>
+                Finishing up the round trip with our back-end, we can execute the transaction:
+            </p>
+            <pre>
+<code><span class="react">exports</span>.<span class="function">processPayment</span> = <span class="const">async</span> (<span class="variable">req</span>, <span class="variable">res</span>) <span class="const">=></span> {
+    <span class="const">let</span> <span class="variable">incomingNonce</span> = <span class="variable">req</span>.<span class="variable">body</span>.<span class="variable">paymentMethodNonce</span>
+    <span class="const">let</span> <span class="variable">paymentAmount</span> = <span class="variable">req</span>.<span class="variable">body</span>.<span class="variable">amount</span>
+    <span class="logic">try</span> {
+        <span class="comment">//process the payment (per braintree docs)</span>
+        <span class="const">const</span> <span class="variable">result</span> = <span class="logic">await</span> <span class="variable">gateway</span>.<span class="variable">transaction</span>.<span class="function">sale</span>({
+            <span class="variable">amount: paymentAmount</span>,
+            <span class="variable">paymentMethodNonce: incomingNonce</span>,
+            <span class="variable">options:</span> { <span class="variable">submitForSettlement:</span> <span class="const">true</span> }
+        })
+        <span class="variable">res</span>.<span class="function">status</span>(<span class="number">200</span>).<span class="function">json</span>(<span class="variable">result</span>)
+    } <span class="logic">catch</span> (<span class="variable">err</span>) {
+        <span class="variable">res</span>.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>(<span class="variable">err</span>)
+    }
+}
+</code>
+            </pre>
+            <div class="horizontalRule"></div>
+            <p>
+                A friend of mine has been encouraging me to add testing to my projects whenever I show them to him.
+                Each time I've put it off, as I'm always eager to get started on the next app.
+                On this project I finally gave it a try (spoiler alert: it was challenging). 
+                Even though I had worked with Mocha and Chai while doing the freecodecamp.org coursework, my retention of the material wasn't stellar.
+                I read a few articles and ended up pursuing Jest as an alternative -- 
+                I figured that since Jest is made to work with React I should get comfortable with it.
+                I ended up creating testing for all of my back-end, though which was not without friction.
+            </p>
+            <p>
+                I originally wrote the back-end with neither asyncronous code nor try/catch blocks. 
+                You might notice that all of the code snippets above have asyncronous code in them.
+                How is that possible? I refactored my back-end of course!
+            </p>
+            <p>
+                My refactor had two objectives. First, as mentioned, I reworked the code to be asyncronous to allow for Jest's testing workflow. 
+                Second, I tried to eliminate callbacks within database functions. I wasn't able to completely eliminate them, 
+                but I trimmed the amount of callbacks down significantly.
+                I did this to make my Jest mocks more manageable, but I also think it makes for much more digestible code.
+            </p>
+            <p>
+                Here's a trickier example of a unit test and its corresponding method:
+            </p>
+            <pre>
+<code><span class="variable">jest</span>.<span class="function">mock</span>(<span class="plainText">'formidable'</span>, () <span class="const">=></span> {
+    <span class="const">const</span> <span class="variable">form</span> = {
+        <span class="variable">keepExtensions:</span> <span class="const">true</span>,
+        <span class="variable">parse: jest</span>.<span class="function">fn</span>(),
+    }
+    <span class="logic">return</span> {
+        <span class="variable">IncomingForm: jest</span>.<span class="function">fn</span>(() => <span class="variable">form</span>),
+    }
+})
+
+...
+
+<span class="function">describe</span>(<span class="plainText">'productController.createProduct'</span>, () <span class="const">=></span> {
+
+    <span class="function">beforeEach</span>(() <span class="const">=></span> {
+        <span class="variable">fields</span> = <span class="variable">product</span>
+        <span class="variable">files</span> = {}
+        <span class="variable">form</span> = <span class="const">new</span> <span class="variable">formidable</span>.<span class="react">IncomingForm</span>()
+        <span class="variable">form</span>.<span class="function">parse</span>.<span class="function">mockImplementation</span>((<span class="variable">req</span>, <span class="variable">callback</span>) <span class="const">=></span> {
+            <span class="variable">originalCallback</span> = <span class="variable">callback</span>
+        })
+    })
+
+    <span class="function">it</span>(<span class="plainText">'should return a status code of 201 and the product json object if successful'</span>, <span class="const">async</span> () <span class="const">=></span> {
+        <span class="react">EcommerceProduct</span>.<span class="function">mockImplementation</span>(() <span class="const">=></span> {
+            <span class="logic">return</span> {
+                <span class="variable">product</span>,
+                <span class="function">save</span>: () <span class="const">=></span> {
+                    <span class="logic">return</span> <span class="variable">product</span>
+                }
+            }
+        })
+        <span class="logic">await</span> <span class="function">createProduct</span>(<span class="variable">req</span>, <span class="variable">res</span>)
+        <span class="logic">await</span> <span class="function">originalCallback</span>(<span class="const">undefined</span>, <span class="variable">fields</span>, <span class="variable">files</span>)
+        <span class="function">expect</span>(<span class="variable">res</span>.<span class="variable">statusCode</span>).<span class="function">toBe</span>(<span class="number">201</span>)
+        <span class="function">expect</span>(<span class="variable">res</span>.<span class="function">_isEndCalled</span>()).<span class="function">toBeTruthy</span>()
+        <span class="function">expect</span>(<span class="variable">res</span>.<span class="function">_getJSONData</span>()).<span class="function">toBeTruthy</span>()
+    })
+})
+
+...
+
+<span class="react">exports</span>.<span class="function">createProduct</span> = <span class="const">async</span> (<span class="variable">req</span>, <span class="variable">res</span>) <span class="const">=></span> {
+    <span class="const">let</span> <span class="variable">form</span> = <span class="const">new</span> <span class="variable">formidable</span>.<span class="react">IncomingForm</span>()
+    <span class="variable">form</span>.<span class="variable">keepExtensions</span> = <span class="const">true</span>
+    <span class="variable">form</span>.<span class="function">parse</span>(<span class="variable">req</span>, <span class="const">async</span> (<span class="variable">err</span>, <span class="variable">fields</span>, <span class="variable">files</span>) <span class="const">=></span> {
+        <span class="logic">if</span> (<span class="variable">err</span>) {
+            <span class="logic">return</span> <span class="variable">res</span>.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ <span class="variable">error:</span> <span class="plainText">'Image could not be uploaded.'</span> })
+        }
+        <span class="const">let</span> <span class="variable">product</span> = <span class="const">new</span> <span class="react">EcommerceProduct</span>(<span class="variable">fields</span>)
+
+        <span class="comment">//photo handling</span>
+        ...
+
+        <span class="logic">try</span> {
+            <span class="const">const</span> <span class="variable">data</span> = <span class="logic">await</span> <span class="variable">product</span>.<span class="function">save</span>()
+            <span class="variable">res</span>.<span class="function">status</span>(<span class="number">201</span>).<span class="function">json</span>({ <span class="variable">data</span> })
+        } <span class="logic">catch</span> (<span class="variable">err</span>) {
+            <span class="variable">res</span>.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ <span class="variable">error:</span> <span class="function">errorHandler</span>(<span class="variable">err</span>) })
+        }
+    })
+}
+</code>
+            </pre>
+            <p>
+                There's a lot going on here. First, Formidable's IncomingForm constructor gets mocked. 
+                The mock accounts for the keep extensions option and a chained .parse call.
+                Next, within the createProduct test section we assign the form fields some made-up test values, 
+                set the files to a blank object because we aren't worried about photos for this test.
+                Then we mock a form.parse call with req and a callback 
+                (which we will later set to err = undefined, fields = made-up data, and files = blank object).
+                Now we move inside of the test where we mock our Mongoose model such that it returns our made-up data along with the ability to mock a .save call.
+                We then execute our method along with the original callback. Whew.
+            </p>
+            <p>
+                To conclude with testing, below is an integration test snippet for the same method. Once we get through 
+                <a                 
+                    href='https://github.com/tfmcmahon/ecommerce/blob/master/tests/testSetup.js' 
+                    target='_blank' 
+                    rel='noopener noreferrer' 
+                >
+                    setting up a local database</a> 
+                instance (<a
+                href='https://zellwk.com/blog/jest-and-mongoose/' 
+                target='_blank' 
+                rel='noopener noreferrer'
+                >
+                    thanks, Zell!</a>), we can grab a seeded admin ID and pass it in as a parameter in our route (not pictured). Similarly, we need to pass 
+                a JSON web token in the headers of the request. As a final step, since we want to simulate sending form data, 
+                we need to make sure we send each form field:
+            </p>
+            <pre>
+<code><span class="const">const</span> <span class="variable">testApp</span> = <span class="function">require</span>(<span class="plainText">'../testApp'</span>)
+<span class="const">const</span> <span class="variable">supertest</span> = <span class="function">require</span>(<span class="plainText">'supertest'</span>)
+<span class="const">const</span> <span class="variable">request</span> = <span class="function">supertest</span>(<span class="variable">testApp</span>)
+    
+...
+
+<span class="comment">//createProduct</span>
+<span class="function">it</span>(<span class="plainText">'should create a product'</span>, <span class="const">async</span> () <span class="const">=></span> {
+    <span class="const">const</span> <span class="variable">res</span> = <span class="logic">await</span> <span class="variable">request</span>.<span class="function">post</span>(<span class="plainText">`/api/product/create/<span class="const">${</span><span class="variable">adminId</span><span class="const">}</span>`</span>)
+        .<span class="function">set</span>({ 
+            <span class="plainText">'Accept'<span class="variable">:</span> 'application/json'</span>,
+            <span class="plainText">'Authorization'<span class="variable">:</span> `Bearer <span class="const">${<span class="variable">token</span>}</span>`</span>,
+            <span class="plainText">'Content-Type'<span class="variable">:</span> 'multipart/form-data'</span>
+        })
+        .<span class="function">field</span>(<span class="plainText">'name'</span>, <span class="variable">product</span>.<span class="variable">name</span>)
+        .<span class="function">field</span>(<span class="plainText">'description'</span>, <span class="variable">product</span>.<span class="variable">description</span>)
+        .<span class="function">field</span>(<span class="plainText">'price'</span>, <span class="variable">product</span>.<span class="variable">price</span>)
+        .<span class="function">field</span>(<span class="plainText">'category'</span>, <span class="variable">product</span>.<span class="variable">category</span>)
+        .<span class="function">field</span>(<span class="plainText">'quantity'</span>, <span class="variable">product</span>.<span class="variable">quantity</span>)
+
+    <span class="function">expect</span>(<span class="variable">res</span>.<span class="variable">statusCode</span>).<span class="function">toBe</span>(<span class="number">201</span>)
+    <span class="function">expect</span>(<span class="variable">res</span>.<span class="variable">body</span>.<span class="variable">data</span>.<span class="variable">name</span>).<span class="function">toBe</span>(<span class="variable">product</span>.<span class="variable">name</span>)
+    <span class="function">expect</span>(<span class="variable">res</span>.<span class="variable">body</span>.<span class="variable">data</span>.<span class="variable">description</span>).<span class="function">toBe</span>(<span class="variable">product</span>.<span class="variable">description</span>)
+    <span class="function">expect</span>(<span class="variable">res</span>.<span class="variable">body</span>.<span class="variable">data</span>.<span class="variable">price</span>).<span class="function">toBe</span>(<span class="variable">product</span>.<span class="variable">price</span>)
+    <span class="function">expect</span>(<span class="variable">res</span>.<span class="variable">body</span>.<span class="variable">data</span>.<span class="variable">category</span>).<span class="function">toBe</span>(<span class="variable">product</span>.<span class="variable">category</span>)
+    <span class="function">expect</span>(<span class="variable">res</span>.<span class="variable">body</span>.<span class="variable">data</span>.<span class="variable">quantity</span>).<span class="function">toBe</span>(<span class="variable">product</span>.<span class="variable">quantity</span>)
+})
+</code>
+            </pre>
+            <p>
+                Getting Jest set up for Mongoose testing was the hardest part. 
+                After I wrapped my head around what my environment needed to look like in order for the two
+                packages to work with each other it was off to the races. 
+                I did hit a few snags, but it was hugely rewarding after powering through it!
+                You can find all of my testing
+                <a
+                    href='https://github.com/tfmcmahon/ecommerce/blob/master/tests' 
+                    target='_blank' 
+                    rel='noopener noreferrer'
+                >
+                right here</a>.
+            </p>
+            <img class='insetImage' src='./Portfolio site/img/portfolio-02-inset.jpg' alt='A screenshot of the project'>
+            <div class="horizontalRule"></div>
+            <p>
+                For the last item on the list -- I wanted to touch on my experience avoiding Redux. 
+                I set this goal to see if I could drop the Redux boiler-plate code that many people find annoying.
+                To achieve this, I utilized local storage to maintain persistent user data and web tokens. However, 
+                I inevitably ran into the scerio where I needed a child component to tell a parent component to update.
+                I used the following technique to accomplish it:
+
+                <pre>
+<code><span class="const">const</span> <span class="function">Cart</span> = () <span class="const">=></span> {
+    <span class="const">const</span> [<span class="variable">run</span>, <span class="function">setRun</span>] = <span class="function">useState</span>(<span class="const">false</span>)
+
+    <span class="function">useEffect</span>(() <span class="const">=></span> {
+        <span class="function">setItems</span>(<span class="function">getCart</span>())
+    }, [<span class="variable">run</span>])
+
+    ...
+
+    <span class="html">&lt<span class="react">Checkout</span> 
+        <span class="variable">setRun</span>=<span class="const">{<span class="function">setRun</span>}</span>
+        <span class="variable">run</span>=<span class="const">{<span class="variable">run</span>}</span>
+    /&gt</span>
+
+    ...
+
+})
+
+<span class="const">const</span> <span class="function">Checkout</span> = ({
+    <span class="function">setRun</span> = <span class="variable">f <span class="const">=></span> f</span>,
+    <span class="function">run</span> = <span class="const">undefined</span>
+}) <span class="const">=></span> { 
+    
+    ... 
+
+    <span class="function">emptyCart</span>(() <span class="const">=></span> {
+        <span class="function">setRun</span>(!<span class="variable">run</span>)
+    })
+
+    ...
+
+})
+</code>
+            </pre>
+            <p>
+                It's a function that is passed to a child that flips a dummy variable in order to 'ping' the parent component's useEffect.
+                In the end it gets the job done, but it's just a different form of weirdness. I'm aiming to try out React's 
+                useReducer on future projects in pursuit of a better option.
+            </p>
+            <br/>
+            <h3 class="writeUpHeader">Takeaways</h3>
+            <p>
+                <b>Payment processing:</b> Braintree integration went smoothly, and I would use it again on future projects.
+                I used trial and error to make sure that I was working with the right values in the requests and responses.
+                That said, I do want to try Stripe among other payment providers just to round out my experiences. I recently read 
+                <a
+                    href='https://blog.logrocket.com/javascript-payment-request-api/' 
+                    target='_blank' 
+                    rel='noopener noreferrer'
+                >   
+                    an article
+                </a>on the Javascript payment request API
+                which looks interesting, too.
+            </p>
+            <p>
+                <b>Testing & Refactoring:</b> The prospect of refacting my back-end was daunting at first, 
+                but now that I'm on the other side of it I'm really glad that I did it.
+                Spending what was effectively double the time on my model, route, middleware and controller code really helped me 
+                reinforce my understanding of my back-end all while tuning each method as necessary.
+            <p>
+                Even though I didn't jump on the testing train in time to follow TDD for this project, 
+                I now have a much better understanding of its importance -- 
+                I feel ready to work on projects that adhere to test-driven development.
+            </p>
+            <p>
+                On my next project I'd like to dive into front-end testing now that I have some experience with Jest.    
+            </p>
+            <p>
+                <b>Redux-less app:</b> This one was more of an experiment going in. I found that local storage was fine to work
+                with as usual, which makes sense since it's universally utilized. However, getting into situations where you need
+                to update a parent from a child is messy. I'd say that it's not a big issue if a project only does this a few times,
+                but the ability to use global state makes things easier and cleaner in the end.
+            </p>
+            <p>
+                My gut feeling is that it is not worth designing around. Once you get through the boiler-plate, Redux is a great tool.
+            </p>
+            <p>
+                <b>Commenting:</b> Overall I made a conscious effort to comment my code throughout the project. 
+                I'm happy with where things ended up on both the front and back end.
+                The commenting paid off in spades when I did my refactoring!
+                However, one area where I didn't do a great job was on my tests.
+                I ended up trying to have my test descriptions double as comments but I don't think that's optimal.
+                It ends up making really long descriptions that have sub-par explanations.
+            </p>
+            <p>
+                That about does it for the Poster Shop -- I'm feeling confident! Thanks again for reading.
+            </p>
+            <br>
+            <div class='logoLinkWrapper'>
+                <a class='logoLink' href='index.html'>
+                    <img class='logoImage' src='./Portfolio site/img/tm-logo.svg' alt='' width='100px'>
+                </a>
+            </div>
+        </div>
+                
+        <!--Footer-->
+        <footer class='footer'>
+            <a class='footerLink' href='mailto:tfmcmahon@gmail.com'>tfmcmahon@gmail.com</a>
+            <ul class='socialList'>
+                <li class='socialListItem'>
+                    <a 
+                        class='socialListLink' 
+                        href='https://www.linkedin.com/in/tfmcmahon/'
+                        rel='noopener noreferrer' 
+                        target='_blank'
+                    >
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a 
+                        class='socialListLink'
+                        href='https://github.com/tfmcmahon'
+                        rel='noopener noreferrer'
+                        target='_blank'
+                    >
+                        <i class="fab fa-github-square"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a 
+                        class='socialListLink'
+                        href='https://codepen.io/tfmcmahon'
+                        rel='noopener noreferrer'
+                        target='_blank'
+                    >
+                        <i class="fab fa-codepen"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a 
+                        class='socialListLink' 
+                        href='https://glitch.com/@tfmcmahon'
+                        rel='noopener noreferrer' 
+                        target='_blank'
+                    >
+                        <i class="fas fa-fish"></i>
+                    </a>
+                </li>
+            </ul>
+        </footer>
+
+        <script src='./Portfolio site/js/index.js'></script>
+
+    </body>
+    </html>
+</html>
