@@ -40,12 +40,12 @@
         <!--Portfolio Item-->
         <section class='intro'>
             <h1 class='title titleIntro'>
-                Poster Shop
+                Poster Shop:
                 <a class="projectLink" href="https://gentle-temple-11675.herokuapp.com" rel='noopener noreferrer' target='_blank'>
                     <strong>An e-commerce app</strong>
                 </a>
             </h1>
-            <p class='subtitle subIntro'>tested with jest</p>
+            <p class='subtitle subIntro'>tested with Jest</p>
             <img class='introImage' src='./Portfolio site/img/portfolio-06.jpg' alt='a screenshot of Project 2'>
         </section>
 
@@ -62,7 +62,7 @@
             <ul class='portfolioItemList'>
                 <li>Implement a third-party payment system.</li>
                 <li>Write unit and integration tests.</li>
-                <li>Create a project without using Redux.</li>
+                <li>Create a project without using Redux to try out a different type of workflow.</li>
                 <li>Up my code commenting game.</li>
             </ul>
             <p>
@@ -234,7 +234,8 @@
                 Even though I had worked with Mocha and Chai while doing the freecodecamp.org coursework, my retention of the material wasn't stellar.
                 I read a few articles and ended up pursuing Jest as an alternative -- 
                 I figured that since Jest is made to work with React I should get comfortable with it.
-                I ended up creating testing for all of my back-end, though which was not without friction.
+                I ended up writing test suites for all of my back-end, a task which ended up being more involved than I had 
+                initially anticipated.
             </p>
             <p>
                 I originally wrote the back-end with neither asyncronous code nor try/catch blocks. 
@@ -322,7 +323,7 @@
                 set the files to a blank object because we aren't worried about photos for this test.
                 Then we mock a form.parse call with req and a callback 
                 (which we will later set to err = undefined, fields = made-up data, and files = blank object).
-                Now we move inside of the test where we mock our Mongoose model such that it returns our made-up data along with the ability to mock a .save call.
+                Now we move inside the test where we mock our Mongoose model such that it returns our made-up data along with the ability to mock a .save call.
                 We then execute our method along with the original callback. Whew.
             </p>
             <p>
@@ -337,8 +338,7 @@
                 href='https://zellwk.com/blog/jest-and-mongoose/' 
                 target='_blank' 
                 rel='noopener noreferrer'
-                >
-                    thanks, Zell!</a>), we can grab a seeded admin ID and pass it in as a parameter in our route (not pictured). Similarly, we need to pass 
+                >thanks, Zell!</a>), we can grab a seeded admin ID and pass it in as a parameter in our route (not pictured). Similarly, we need to pass 
                 a JSON web token in the headers of the request. As a final step, since we want to simulate sending form data, 
                 we need to make sure we send each form field:
             </p>
@@ -391,7 +391,7 @@
                 For the last item on the list -- I wanted to touch on my experience avoiding Redux. 
                 I set this goal to see if I could drop the Redux boiler-plate code that many people find annoying.
                 To achieve this, I utilized local storage to maintain persistent user data and web tokens. However, 
-                I inevitably ran into the scerio where I needed a child component to tell a parent component to update.
+                I inevitably ran into the scenario where I needed a child component to tell a parent component to update.
                 I used the following technique to accomplish it:
 
                 <pre>
@@ -439,7 +439,7 @@
             <p>
                 <b>Payment processing:</b> Braintree integration went smoothly, and I would use it again on future projects.
                 I used trial and error to make sure that I was working with the right values in the requests and responses.
-                That said, I do want to try Stripe among other payment providers just to round out my experiences. I recently read 
+                That said, I do want to try Stripe among other payment providers just to round out my experience. I recently read 
                 <a
                     href='https://blog.logrocket.com/javascript-payment-request-api/' 
                     target='_blank' 
@@ -450,7 +450,7 @@
                 which looks interesting, too.
             </p>
             <p>
-                <b>Testing & Refactoring:</b> The prospect of refacting my back-end was daunting at first, 
+                <b>Testing & Refactoring:</b> The prospect of refactoring my back-end was daunting at first, 
                 but now that I'm on the other side of it I'm really glad that I did it.
                 Spending what was effectively double the time on my model, route, middleware and controller code really helped me 
                 reinforce my understanding of my back-end all while tuning each method as necessary.
@@ -473,7 +473,7 @@
             </p>
             <p>
                 <b>Commenting:</b> Overall I made a conscious effort to comment my code throughout the project. 
-                I'm happy with where things ended up on both the front and back end.
+                I'm happy with where things ended up on both the front- and back-end.
                 The commenting paid off in spades when I did my refactoring!
                 However, one area where I didn't do a great job was on my tests.
                 I ended up trying to have my test descriptions double as comments but I don't think that's optimal.
