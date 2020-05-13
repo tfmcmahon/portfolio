@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <link rel="icon" href="./Portfolio site/img/favicon.ico" />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Tim McMahon's portfolio (Issue Tracker)</title> 
+        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" 
+              integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" 
+              crossorigin="anonymous" 
+        />
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,900|Source+Sans+Pro:300,900&display=swap" 
+              rel="stylesheet"
+        >
+        <link rel='stylesheet' href='./Portfolio site/css/style.css'>
+
+    </head>
+    <body>
+        <header>
+            <div class='logo'>
+                <a class='logoLink' href='index.html'>
+                    <img class='logoImage' src='./Portfolio site/img/tm-logo.svg' alt='' width='50px'>
+                </a>
+            </div>
+            </div>
+                <button class='navToggle' aria-label='toggle navigation'>
+                    <span class='hamburger'></span>
+                </button>
+                <nav class='nav'>
+                    <ul class='navList'>
+                        <li class='navItem'><a href='index.html' class='navLink'>Home</a></li>
+                        <li class='navItem'><a href='index.html#projects' class='navLink'>Technical Projects</a></li>
+                        <li class='navItem'><a href='index.html#artwork' class='navLink'>Artwork</a></li>
+                        <li class='navItem'><a href='index.html#about' class='navLink'>About me</a></li>
+                    </ul>
+                </nav>
+        </header>
+
+        <!--Portfolio Item-->
+        <section class='intro'>
+            <h1 class='title titleIntro'>
+                Issue Tracker,
+                <a class="projectLink" href="http://www.issue-tracker-app.com/" rel='noopener noreferrer' target='_blank'>
+                    <strong>a full-stack app</strong>
+                </a>
+            </h1>
+            <p class='subtitle subIntro'>built with MERN</p>
+            <img class='introImage' src='./Portfolio site/img/portfolio-04.jpg' alt='a screenshot of Project 2'>
+        </section>
+
+        <div class='portfolioItemIndividual'>
+            <h3 class="writeUpHeader">Overview</h3>
+            <p>
+                Hey there, future Tim here. This is a post-mortem of my 
+                <a href="http://www.issue-tracker-app.com/" target='_blank' rel="noopener noreferrer">Issue Tracker app</a>.
+                I'm writing this after having a few more projects under my belt.
+                Here, I'll be touching on more of the nuts and bolts of the project.
+                For something more sophisticated check out my write-up on my 
+                <a 
+                  href="portfolio-item-poster-shop-app.html"
+                  target='_blank' 
+                  rel="noopener noreferrer">
+                e-commerce project</a>.
+                I've learned a lot since I worked on this code, 
+                but this project was a great exercise.
+            </p>
+            <p>
+                Here is what I wanted to accomplish with this project:
+            </p>
+            <ul class='portfolioItemList'>
+                <li>Implement React and Redux for the front-end.</li>
+                <li>Use Node, Express, and Mongoose on the back-end.</li>
+                <li>Deploy a finished project.</li>
+                <li>Familiarize myself with a code editor and GitHub.</li>
+            </ul>
+            <p>
+              This was my very first project that I create entirely on my own after completing the 
+              <a 
+                href='https://www.freecodecamp.org/' 
+                target='_blank' 
+                rel='noopener noreferrer' >
+                  FreeCodeCamp.org</a> cirriculum.
+              I was excited and nervous --
+              staring at a blank canvas was quite daunting. Time to put it all together: React, Node, Express, and Mongoose.
+            </p>
+            <p>
+              I decided to create an issue tracker that took inspiration from a cap-stone project 
+              which I completed towards the end of my time with Free Code Camp.
+              The project would work off of a foundational concept while adding in more functionality.
+              I took the idea of a basic CRUD app and added user account creation, 
+              project grouping, and shareability between users.
+            </p>
+            <h3 class="writeUpHeader">Challenges</h3>
+            <p>
+              Let's start things off by setting up a back-end route. 
+              To note, I didn't separate routes and controllers on this project -- 
+              something I would do now that I have more experience.
+            </p>            
+            <pre>
+<code><span class="const">const</span> <span class="variable">router</span> = <span class="variable">require</span>(<span class="plainText">'express'</span>).<span class="function">Router</span>()
+
+<span class="comment">//Load input validation</span>
+<span class="const">const</span> <span class="function">validateSubmitInput</span> = <span class="function">require</span>(<span class="plainText">'../validation/submitIssue'</span>)
+
+<span class="comment">//Load project model</span>
+<span class="const">const</span> <span class="react">Issue</span> = <span class="function">require</span>(<span class="plainText">'../models/Issue'</span>)
+  
+<span class="variable">router</span>.<span class="function">post</span>(<span class="plainText">'/:user/:project/:issue'</span>, (<span class="variable">req</span>, <span class="variable">res</span>) <span class="const">=></span> {
+  <span class="comment">//Validate inputs</span>
+  <span class="const">const</span> { <span class="variable">errors</span>, <span class="variable">isValid</span> } = <span class="function">validateSubmitInput</span>(<span class="variable">req</span>.<span class="variable">body</span>)
+  <span class="comment">//return errors if invalid</span>
+  <span class="logic">if</span> (!<span class="variable">isValid</span>) {
+    <span class="variable">res</span>.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>(<span class="variable">errors</span>)
+  } <span class="logic">else</span> {
+    <span class="comment">//check DB by title</span>
+    <span class="react">Issue</span>.<span class="function">findOne</span>({ <span class="variable">user: req</span>.<span class="variable">params</span>.<span class="variable">user</span>, <span class="variable">project: req</span>.<span class="variable">params</span>.<span class="variable">project</span>, <span class="variable">title: req</span>.<span class="variable">body</span>.<span class="variable">issue_title</span> }).<span class="function">then</span>(<span class="variable">issue</span> <span class="const">=></span> {
+      <span class="logic">if</span> (<span class="variable">issue</span>) {
+        <span class="variable">res</span>.<span class="function">status</span>(<span class="number">400</span>).<span class="function">json</span>({ <span class="variable">title:</span> <span class="plainText">'That issue already exists'</span> })
+      } <span class="logic">else</span> {
+        <span class="const">const</span> <span class="variable">newIssue</span> = <span class="const">new</span> <span class="react">Issue</span>({
+          <span class="variable">user: req</span>.<span class="variable">params</span>.<span class="variable">user</span>,
+          <span class="variable">project: req</span>.<span class="variable">params</span>.<span class="variable">project</span>,
+          <span class="variable">issue_title: req</span>.<span class="variable">body</span>.<span class="variable">issue_title</span>,
+          <span class="variable">issue_text: req</span>.<span class="variable">body</span>.<span class="variable">issue_text</span>,
+          <span class="variable">created_on:</span> <span class="const">new</span> <span class="react">Date</span>(),
+          <span class="variable">created_by: req</span>.<span class="variable">body</span>.<span class="variable">created_by</span>,
+          <span class="variable">assigned_to: req</span>.<span class="variable">body</span>.<span class="variable">assigned_to</span> || <span class="plainText">''</span>,
+          <span class="variable">status_text: req</span>.<span class="variable">body</span>.<span class="variable">status_text</span> || <span class="plainText">''</span>
+        })
+
+        <span class="comment">//save the project in the DB</span>
+        <span class="variable">newIssue</span>
+          .<span class="function">save</span>()
+          .<span class="function">then</span>(<span class="variable">issue</span> <span class="const">=></span> <span class="variable">res</span>.<span class="function">json</span>(<span class="variable">issue</span>))
+          .<span class="function">catch</span>(<span class="variable">err</span> <span class="const">=></span> <span class="variable">console</span>.<span class="function">log</span>(<span class="variable">err</span>))
+      }
+    })
+  }
+})</code>
+        </pre>
+            <p>
+              I've left off my model and the validator to save space. You can see them <a
+              href="https://github.com/tfmcmahon/issue-tracker/blob/master/models/Issue.js"
+              target='_blank' 
+              rel='noopener noreferrer' >
+                here</a> and <a
+                href="https://github.com/tfmcmahon/issue-tracker/blob/master/validation/submitIssue.js"
+                target='_blank' 
+                rel='noopener noreferrer' >
+                  here</a>. One thing I want to call out is that my back-end code for this project is doing some nested actions.
+                  Knowing what I know now, if I were to implement testing I would write things a little bit 
+                  differently in order facilitate that process.
+            </p>
+            <p>
+              Let's take a look at a front-end action that hits this end point:
+            </p>
+            <pre>
+<code><span class="comment">//Create issue</span>
+<span class="logic">export</span> <span class="const">const</span> <span class="function">createIssue</span> = <span class="variable">newIssue</span> <span class="const">=></span> <span class="variable">dispatch</span> <span class="const">=></span> {
+  <span class="variable">axios</span>
+    .<span class="function">post</span>(<span class="plainText">`/api/issues/<span class="const">${<span class="variable">newIssue<span class="white">.</span>user</span>}</span>/<span class="const">${<span class="variable">newIssue</span><span class="white">.</span><span class="variable">project</span>}</span>/<span class="const">${<span class="variable">newIssue</span><span class="white">.</span><span class="variable">issue_title</span>}</span>`</span>, <span class="variable">newIssue</span>)
+    .<span class="function">then</span>(<span class="variable">res</span> <span class="const">=></span> {
+      <span class="function">dispatch</span>({
+        <span class="variable">type: CREATE_ISSUE</span>,
+        <span class="variable">payload: res.data</span>
+      })
+      <span class="function">dispatch</span>(<span class="function">clearErrors</span>())
+    })
+    .<span class="function">catch</span>(<span class="variable">err</span> <span class="const">=></span>
+      <span class="function">dispatch</span>(<span class="function">returnErrors</span>(<span class="variable">err</span>.<span class="variable">response</span>.<span class="variable">data</span>, <span class="variable">err</span>.<span class="variable">response</span>.<span class="variable">status</span>))
+    )
+}</code>
+            </pre>
+            <p>
+              We fire off a higher order function which makes a post request to our back-end, it then calls the 
+              appropriate reducer(s).
+            </p>
+            <p>
+              Over in our reducer we're adding the newly created issue into our global state 
+              so that we can display it via its React component. We do this by combining the existing state
+              (grabbed with the spread operator) and the new issue in an array:
+            </p>
+            <pre>
+<code><span class="const">const</span> <span class="variable">initialState</span> = {
+  <span class="variable">issues:</span> [],
+  <span class="variable">issue:</span> [],
+  <span class="variable">isEdit:</span> <span class="const">false</span>,
+  <span class="variable">loading:</span> <span class="const">false</span>
+}
+
+<span class="logic">export default</span> <span class="const">function</span>(<span class="variable">state</span> = <span class="variable">initialState</span>, <span class="variable">action</span>) {
+  <span class="logic">switch</span> (<span class="variable">action</span>.<span class="variable">type</span>) {
+        ...
+        <span class="logic">case</span> <span class="variable">CREATE_ISSUE</span>:
+          <span class="logic">return</span> {
+                ...<span class="variable">state</span>,
+                <span class="variable">issues:</span> [<span class="variable">action</span>.<span class="variable">payload</span>, ...<span class="variable">state</span>.<span class="variable">issues</span>]
+            }
+        ...
+        <span class="logic">default</span>:
+          <span class="logic">return</span> <span class="variable">state</span>
+    }
+}</code>
+            </pre>
+            <p>
+              Last but not least here is an abbreviated version of our React component:
+            </p>
+            <pre>
+<code><span class="logic">import</span> <span class="variable">React</span>, { <span class="variable">Component</span> } <span class="logic">from</span> <span class="plainText">'react'</span>
+<span class="logic">import</span> { <span class="variable">connect</span> } <span class="logic">from</span> <span class="plainText">'react-redux'</span>
+<span class="logic">import</span> { <span class="variable">createIssue</span> } <span class="logic">from</span> <span class="plainText">'../../actions/issueActions'</span>
+
+<span class="const">class</span> <span class="react">Submit</span> <span class="const">extends</span> <span class="react">Component</span> {
+  <span class="const">constructor</span>() {
+    <span class="const">super</span>()
+    <span class="const">this</span>.<span class="variable">state</span> = {
+      <span class="variable">issue_title</span>: <span class="plainText">''</span>,
+      ...
+    }
+    <span class="const">this</span>.<span class="variable">handleSubmit</span> = <span class="const">this</span>.<span class="function">handleSubmit</span>.<span class="function">bind</span>(<span class="const">this</span>)
+    ...  
+}
+
+  <span class="const">static</span> <span class="function">getDerivedStateFromProps</span>(<span class="variable">nextProps</span>, <span class="variable">prevState</span>) {
+    <span class="logic">if</span> (<span class="variable">nextProps</span>.<span class="variable">errors</span> !== <span class="variable">prevState</span>.<span class="variable">errors</span>) {
+      <span class="logic">return</span> { <span class="variable">errors: nextProps</span>.<span class="variable">errors</span> }
+    } <span class="logic">else</span> {
+      <span class="logic">return</span> <span class="const">null</span>
+    }
+  }
+  
+  <span class="function">componentWillUnmount</span>() {
+    <span class="const">this</span>.<span class="variable">props</span>.<span class="function">clearErrors</span>()
+  }
+
+  <span class="function">handleSubmit</span>(<span class="variable">event</span>) {
+    <span class="variable">event</span>.<span class="function">preventDefault</span>()
+    <span class="const">var</span> <span class="variable">currentProject</span> = <span class="variable">window</span>.<span class="variable">location</span>.<span class="variable">pathname</span>.<span class="function">replace</span>(<span class="regex">/\/dashboard\//</span>, <span class="plainText">""</span>),
+      <span class="variable">currentProjectArr</span> = <span class="variable">currentProject</span>.<span class="function">split</span>(<span class="plainText">"/"</span>)
+    <span class="const">var</span> <span class="variable">newIssue</span> = {
+      <span class="variable">issue_title:</span> <span class="const">this</span>.<span class="variable">state</span>.<span class="variable">issue_title</span>
+      ...
+    }
+    <span class="const">this</span>.<span class="variable">props</span>.<span class="function">createIssue</span>(<span class="variable">newIssue</span>)
+    <span class="comment">//clear the state after submitting an issue</span>
+    <span class="const">this</span>.<span class="function">setState</span>({
+      <span class="variable">issue_title:</span> <span class="plainText">''</span>,
+        ...
+  })
+
+  <span class="function">render</span> () {
+    <span class="const">const</span> <span class="variable">errors</span> = <span class="const">this</span>.<span class="variable">state</span>.<span class="variable">errors</span>
+    <span class="logic">return</span> (
+      <span class="html">&lt</span><span class="const">div</span> <span class="variable">className</span>=<span class="plainText">"submitWrapper"</span><span class="html">></span>
+        <span class="html">&lt</span><span class="const">div</span> <span class="variable">className</span>=<span class="plainText">"submitIssueForm"</span><span class="html">></span>
+          <span class="html">&lt</span><span class="const">h3</span> <span class="variable">className</span>=<span class="plainText">"submitTitle"</span><span class="html">></span>Create a new issue<span class="html">&lt/</span><span class="const">h3</span><span class="html">></span>
+          <span class="html">&lt</span><span class="const">form</span> <span class="variable">className</span>=<span class="plainText">"submitForm"</span> <span class="variable">onSubmit</span>=<span class="const">{this<span class="white">.</span><span class="function">handleSubmit</span>}</span>>
+            <span class="html">&lt</span><span class="const">input</span> 
+              <span class="variable">value<span class="white">=</span><span class="const">{this</span><span class="white">.</span>state<span class="white">.</span>issue_title<span class="const">}</span></span>
+              <span class="variable">onChange</span>=<span class="const">{this<span class="white">.</span><span class="function">handleChange</span>}</span> 
+              <span class="variable">type</span>=<span class="plainText">"text" </span>
+              <span class="variable">name</span>=<span class="plainText">issue_title" </span>
+              <span class="variable">placeholder</span>=<span class="plainText">"Title*" </span>
+              <span class="variable">className</span>=<span class="plainText">submitIssueTitle"</span>
+              <span class="variable">required</span>=<span class="plainText">""</span>
+            <span class="html">/></span>
+            ...
+            <span class="const">{</span>(<span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">issue_title_submit</span> || <span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">issue_text_submit</span> || <span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">created_by_submit</span>) && 
+              <span class="html">&lt</span><span class="const">div</span> <span class="variable">className</span>=<span class="plainText">"errorWrapper"</span><span class="html">></span>
+                <span class="const">{</span><span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">issue_title_submit</span> && <span class="html">&lt</span><span class="const">p</span> <span class="variable">className</span>=<span class="plainText">"errorText"</span><span class="html">></span><span class="const">{</span><span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">issue_title_submit</span><span class="const">}</span><span class="html">&lt/</span><span class="const">p</span><span class="html">></span><span class="const">}</span>
+                <span class="const">{</span><span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">issue_text_submit</span> && <span class="html">&lt</span><span class="const">p</span> <span class="variable">className</span>=<span class="plainText">"errorText"</span><span class="html">></span><span class="const">{</span><span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">issue_text_submit</span><span class="const">}</span><span class="html">&lt/</span><span class="const">p</span><span class="html">></span><span class="const">}</span>
+                <span class="const">{</span><span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">created_by_submit</span> && <span class="html">&lt</span><span class="const">p</span> <span class="variable">className</span>=<span class="plainText">"errorText"</span><span class="html">></span><span class="const">{</span><span class="variable">errors</span>.<span class="variable">msg</span>.<span class="variable">created_by_submit</span><span class="const">}</span><span class="html">&lt/</span><span class="const">p</span><span class="html">></span><span class="const">}</span>
+              <span class="html">&lt</span><span class="const">div</span><span class="html">></span>
+            <span class="const">}</span>
+            <span class="html">&lt</span><span class="const">button</span> <span class="variable">type</span>=<span class="plainText">"submit"</span> <span class="variable">className</span>=<span class="plainText">"submitIssueButton"</span><span class="html">></span>Submit<span class="html">&lt/</span><span class="const">button</span><span class="html">></span>
+          <span class="html">&lt/</span><span class="const">form</span><span class="html">></span>
+        <span class="html">&lt/</span><span class="const">div</span><span class="html">></span>
+      <span class="html">&lt/</span><span class="const">div</span><span class="html">></span>
+    )
+  }
+}
+
+<span class="const">const</span> <span class="function">mapStateToProps</span> = <span class="variable">state</span> <span class="const">=></span> ({
+  <span class="variable">auth: state<span class="white">.</span>auth</span>,
+  <span class="variable">issues: state<span class="white">.</span>issues</span>,
+  <span class="variable">errors: state<span class="white">.</span>errors</span>
+})
+
+<span class="logic">export default</span> <span class="function">connect</span>(
+  <span class="function">mapStateToProps</span>,
+  { <span class="function">createIssue</span>, <span class="function">clearErrors</span> }
+)(<span class="react">Submit</span>)</code>
+            </pre>
+            <p>
+              I've trimmed out some of the state and form parts for length's sake. I hope these code blocks help
+              illustrate an end to end trip through the app.
+            </p>
+            <p>
+              One of the challenges I encountered during this project was needing to
+              simultaneously enable an issue to be edited while disabling all non-selected issues.
+              To accomplish this I created a global edit action/reducer to put the issue into edit mode,
+              in the mean time I compared the issue's ID with the global state's issues. 
+              These paired with conditional rendering did the trick.
+            </p>
+            <img class='insetImage' src="./Portfolio site/img/issue-tracker-inset.jpg" alt='a screenshot of the app'/>
+            <div class="horizontalRule"></div>
+            <p>
+              On to deployment. A technique I implemented to have an smoother deployment was to nest the client folder
+              within the back-end project. Each "project" then has its own package.json. 
+              This gives us two advantages.
+              First, Inside of the client's package.json
+              we assign a key "proxy" to the same port that we're using for our back-end. Now we can run the React front-end 
+              and the server via a script with<a
+                href="https://www.npmjs.com/package/concurrently"
+                target='_blank' 
+                rel='noopener noreferrer' 
+              >
+              Concurrently</a> like so:
+            </p>
+            <pre>
+<code><span class="variable">"dev":</span> <span class="plainText">"concurrently \"npm run server\" \"npm run client\""</span></code>
+            </pre>
+            <p>
+              Second, we can <a
+                href="https://devcenter.heroku.com/articles/nodejs-support#customizing-the-build-process"
+                target='_blank' 
+                rel='noopener noreferrer' 
+              >
+              create a postbuild script</a> which installs all of our client dependencies and creates our 
+              React production build. After all that we can push to Heroku and cross our fingers.
+            </p>
+            <p>
+              Once we succeed with our Heroku push all that's left is to set our environment variables via our Heroku
+              dashboard!
+            </p>
+            <br/>
+            <h3 class="writeUpHeader">Takeaways</h3>
+            <p>
+                <b>React & Redux:</b> I'm really starting to enjoy and get comfortable with React. 
+                Even though this project was written with class components and I've since moved on to hooks, 
+                I was able to get in valuable general React practice through repetition. 
+                Also, now that I've experimented on a few more projects, 
+                I like the workflow of Redux despite the boiler-plate needed to get things going.
+            <p>
+            <p>
+                <b>Back-end:</b> I now have two similar styles of user authentication under my belt.
+                The first was using bcrypt to handle encryption and the second was using crypto which is now
+                built into Express. I've also both built the encryption method into the user model as well as having
+                it be part of the auth controller. The encryption as part of Mongoose model does feel a bit cleaner, but
+                both styles seemed to work well.
+            </p>
+            <p>
+                <b>Deployment:</b> All things considered, I had a really smooth experience with Heroku. 
+                It was a much more stream-lined process than other platforms that I looked into.
+            </p>
+            <p>
+              Overall, even though I would do some things differently, 
+              I learned a lot while making this app.
+              I'm happy with the overarching structure of the project -- admittedly my front-end variables 
+              could use some destructuring and tidying up. Thanks for reading! Feel free to
+              check out the 
+              <a
+                href="https://github.com/tfmcmahon/issue-tracker" 
+                target='_blank' 
+                rel="noopener noreferrer"
+              >full repository</a>.
+            </p>
+            <br>
+            <div class='logoLinkWrapper'>
+                <a class='logoLink' href='index.html'>
+                    <img class='logoImage' src='./Portfolio site/img/tm-logo.svg' alt='' width='100px'>
+                </a>
+            </div>
+        </div>
+                
+        <!--Footer-->
+        <footer class='footer'>
+            <a class='footerLink' href='mailto:tfmcmahon@gmail.com'>tfmcmahon@gmail.com</a>
+            <ul class='socialList'>
+                <li class='socialListItem'>
+                    <a 
+                        class='socialListLink' 
+                        href='https://www.linkedin.com/in/tfmcmahon/'
+                        rel='noopener noreferrer' 
+                        target='_blank'
+                    >
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a 
+                        class='socialListLink'
+                        href='https://github.com/tfmcmahon'
+                        rel='noopener noreferrer'
+                        target='_blank'
+                    >
+                        <i class="fab fa-github-square"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a 
+                        class='socialListLink'
+                        href='https://codepen.io/tfmcmahon'
+                        rel='noopener noreferrer'
+                        target='_blank'
+                    >
+                        <i class="fab fa-codepen"></i>
+                    </a>
+                </li>
+
+                <li class='socialListItem'>
+                    <a 
+                        class='socialListLink' 
+                        href='https://glitch.com/@tfmcmahon'
+                        rel='noopener noreferrer' 
+                        target='_blank'
+                    >
+                        <i class="fas fa-fish"></i>
+                    </a>
+                </li>
+            </ul>
+        </footer>
+
+        <script src='./Portfolio site/js/index.js'></script>
+
+    </body>
+    </html>
+</html>
