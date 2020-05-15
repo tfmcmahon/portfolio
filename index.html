@@ -23,17 +23,17 @@
                     <img class='logoImage' src='./Portfolio site/img/tm-logo.svg' alt='' width='50px'>
                 </a>
             </div>
-                <button class='navToggle' aria-label='toggle navigation'>
-                    <span class='hamburger'></span>
-                </button>
-                <nav class='nav'>
-                    <ul class='navList'>
-                        <li class='navItem'><a href='#home' class='navLink'>Home</a></li>
-                        <li class='navItem'><a href='#projects' class='navLink'>Technical Projects</a></li>
-                        <li class='navItem'><a href='#artwork' class='navLink'>Artwork</a></li>
-                        <li class='navItem'><a href='#about' class='navLink'>About me</a></li>
-                    </ul>
-                </nav>
+            <button class='navToggle' aria-label='toggle navigation'>
+                <span class='hamburger'></span>
+            </button>
+            <nav class='nav'>
+                <ul class='navList'>
+                    <li class='navItem'><a href='#home' class='navLink'>Home</a></li>
+                    <li class='navItem'><a href='index.html#projects' class='navLink'>What I know</a></li>
+                    <li class='navItem'><a href='index.html#artwork' class='navLink'>What I've made</a></li>
+                    <li class='navItem'><a href='index.html#about' class='navLink'>Who I am</a></li>
+                </ul>
+            </nav>
         </header>
 
         <!--Introduction-->
@@ -89,28 +89,80 @@
 
         <!--Artwork-->
         <section class='art' id='artwork'>
-            <h2 class='title titleArtwork'>What I've Made</h2>
+            <h2 class='title titleArtwork'>What I've made</h2>
             <p class='subtitle subArtwork'>A selection of technical projects and hyper-real renders</p>
 
             <div class='portfolio'>
                 <!--Portfolio item 1-->
-                <a href='portfolio-item-twitch-viewer.html' class='portfolioItem'>
-                    <img src='./Portfolio site/img/portfolio-01.jpg' alt='technical project 1' class='portfolioImage'>
+                <a href='portfolio-item-poster-shop-app.html' >
+                    <div class="portfolioItem">
+                        <img 
+                            src='./Portfolio site/img/portfolio-06.jpg' 
+                            alt='technical project 3' 
+                            class='portfolioImage'
+                        >
+                        <div class="hoverTop">
+                            <div class="hoverText">
+                                <p class="hoverBoldText">
+                                    Project 3: Poster Shop app
+                                </p>
+                                <p>
+                                    A full-stack e-commerce app built with the MERN stack.
+                                    Features back-end unit and integration testing with Jest.
+                                    Integrates with Braintree for payment processing.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </a>
 
                 <!--Portfolio item 2-->
-                <a href='portfolio-item-poster-shop-app.html' class='portfolioItem'>
-                    <img src='./Portfolio site/img/portfolio-06.jpg' alt='technical project 2' class='portfolioImage'>
+                <a href='portfolio-item-twitch-viewer.html' >
+                    <div class="portfolioItem">
+                        <img 
+                            src='./Portfolio site/img/portfolio-01.jpg' 
+                            alt='technical project 2' 
+                            class='portfolioImage'
+                        >
+                        <div class="hoverTop">
+                            <div class="hoverText">
+                                <p class="hoverBoldText">
+                                    Project 2: Twitch Viewer App
+                                </p>
+                                <p>
+                                    A front-end app built with React and Redux.
+                                    Authenticates with the Twitch.tv API using the OAuth2 workflow.
+                                    Search the Twitch database by game or stream after connecting your account.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </a>
 
                 <!--Portfolio item 3-->
-                <a href='portfolio-item-issue-tracker-app.html' class='portfolioItem'>
-                    <img src='./Portfolio site/img/portfolio-04.jpg' alt='' class='portfolioImage'>
+                <a href='portfolio-item-issue-tracker-app.html' >
+                    <div class="portfolioItem">
+                        <img 
+                            src='./Portfolio site/img/portfolio-04.jpg' 
+                            alt='technical project 1' 
+                            class='portfolioImage'
+                        >
+                        <div class="hoverTop">
+                            <div class="hoverText">
+                                <p class="hoverBoldText">
+                                    Project 1: Issue Tracker App
+                                </p>
+                                <p>
+                                    A full-stack app built with Node, Express, MongoDB, and React + Redux.
+                                    Allows multi-user project and issue collaboration.
+                                    Registration and login implemented via JSON web tokens.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </a>
-
-                <!--Portfolio item 4-->
-                <a href='portfolio-item.html' class='portfolioItem'>
-                    <img src='./Portfolio site/img/portfolio-03.jpg' alt='' class='portfolioImage'>
+                <a href='' class='portfolioItem'>
+                    <img src='' alt='' class='portfolioImage'>
                 </a>
             </div>
         </section>

@@ -25,25 +25,25 @@
             </div>
             </div>
                 <button class='navToggle' aria-label='toggle navigation'>
-                    <span class='hamburger'></span>
-                </button>
-                <nav class='nav'>
-                    <ul class='navList'>
-                        <li class='navItem'><a href='index.html' class='navLink'>Home</a></li>
-                        <li class='navItem'><a href='index.html#projects' class='navLink'>Technical Projects</a></li>
-                        <li class='navItem'><a href='index.html#artwork' class='navLink'>Artwork</a></li>
-                        <li class='navItem'><a href='index.html#about' class='navLink'>About me</a></li>
-                    </ul>
-                </nav>
+                <span class='hamburger'></span>
+            </button>
+            <nav class='nav'>
+                <ul class='navList'>
+                    <li class='navItem'><a href='index.html' class='navLink'>Home</a></li>
+                    <li class='navItem'><a href='index.html#projects' class='navLink'>What I know</a></li>
+                    <li class='navItem'><a href='index.html#artwork' class='navLink'>What I've made</a></li>
+                    <li class='navItem'><a href='index.html#about' class='navLink'>Who I am</a></li>
+                </ul>
+            </nav>
         </header>
 
         <!--Portfolio Item-->
         <section class='intro'>
             <h1 class='title titleIntro'>
-                Twitch Viewer:
                 <a class="projectLink" href="https://tfmcmahon.github.io/twitch-api" rel='noopener noreferrer' target='_blank'>
-                    <strong>A front-end app</strong>
+                    Twitch Viewer:
                 </a>
+                <strong>A front-end app</strong>
             </h1>
             <p class='subtitle subIntro'>made with React hooks</p>
             <img class='introImage' src='./Portfolio site/img/portfolio-01.jpg' alt='a screenshot of Project 1'>
@@ -52,8 +52,8 @@
         <div class='portfolioItemIndividual'>
             <h3 class="writeUpHeader">Overview</h3>
             <p>
-                Welcome to my <a href="https://tfmcmahon.github.io/twitch-api" target='_blank' rel="noopener noreferrer">Twitch Viewer App</a> 
-                write-up! Before starting the project, I wrote down a few goals that I wanted to accomplish:
+                Welcome to my second project and write-up -- this one is called the <a href="https://tfmcmahon.github.io/twitch-api" target='_blank' rel="noopener noreferrer">Twitch Viewer app</a>!
+                Before starting the project, I wrote down a few goals that I wanted to accomplish:
             </p>
             <ul class='portfolioItemList'>
                 <li>Familiarize myself with and implement React hooks.</li>
@@ -116,10 +116,10 @@
         .<span class="function">get</span>(<span class="plainText">'streams?first=20'</span>) 
         .<span class="function">then</span>(<span class="variable">res</span> <span class="const">=></span> {
             <span class="variable">streams</span> = <span class="variable">res</span>.<span class="variable">data</span>.<span class="variable">data</span>
-            <span class="variable">gameIds</span> = <span class="variable">streams</span>.<span class="function">map</span>(<span class="variable">stream</span> <span class="const">=></span> <span class="plainText">`</span>...<span class="const">${</span><span class="variable">stream</span>.<span class="variable">game_id</span><span class="const">}</span><span class="plainText">`</span>)
-            <span class="variable">userIds</span> = <span class="variable">streams</span>.<span class="function">map</span>(<span class="variable">stream</span> <span class="const">=></span> <span class="plainText">`</span>...<span class="const">${</span><span class="variable">stream</span>.<span class="variable">user_id</span><span class="const">}</span><span class="plainText">`</span>)
-            <span class="variable">dispatch</span>(<span class="function">getTopGames</span>(<span class="variable">gameIds</span>, <span class="variable">twitchToken</span>))
-            <span class="variable">dispatch</span>(<span class="function">getTopUsers</span>(<span class="variable">userIds</span>, <span class="variable">twitchToken</span>))
+            <span class="variable">gameIds</span> = <span class="variable">streams</span>.<span class="function">map</span>(<span class="variable">stream</span> <span class="const">=></span> <span class="plainText">`id=</span><span class="const">${</span><span class="react">Number</span>(<span class="variable">stream</span>.<span class="variable">game_id</span>)<span class="const">}</span><span class="plainText">`</span>).<span class="function">join</span>(<span class="plainText">'&'</span>)
+            <span class="variable">userIds</span> = <span class="variable">streams</span>.<span class="function">map</span>(<span class="variable">stream</span> <span class="const">=></span> <span class="plainText">`id=</span><span class="const">${</span><span class="react">Number</span>(<span class="variable">stream</span>.<span class="variable">user_id</span>)<span class="const">}</span><span class="plainText">`</span>).<span class="function">join</span>(<span class="plainText">'&'</span>)
+            <span class="variable">dispatch</span>(<span class="function">getTopGames</span>(<span class="variable">gameIds</span>, <span class="variable">twitchToken</span>)) <span class="comment">// use the reuslting IDs to get the game names and art links</span>
+            <span class="variable">dispatch</span>(<span class="function">getTopUsers</span>(<span class="variable">userIds</span>, <span class="variable">twitchToken</span>)) <span class="comment">// use the reuslting IDs to get user profile images</span>
             <span class="variable">dispatch</span>({
                 <span class="variable">type: GET_TOP_STREAMS,
                 payload: res.data</span>
