@@ -441,6 +441,13 @@ header {
 .portfolio {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    max-width: 1900px;
+    margin: auto;
+}
+
+.portfolio a {
+    margin: 0;
+    padding: 0;
 }
 
 .portfolioItem {
@@ -450,11 +457,13 @@ header {
     display: inline-block;
 	overflow: hidden;
 	max-width: 100%;
-	height: auto;
+    height: auto;
+    vertical-align: bottom;
 }
 
 .portfolioItem img {
-	max-width: 100%;
+    max-width: 100%;
+    vertical-align: bottom;
 }
 
 .portfolioItem .portfolioImage {
