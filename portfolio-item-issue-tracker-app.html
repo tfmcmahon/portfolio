@@ -52,18 +52,21 @@
         <div class='portfolioItemIndividual'>
             <h3 class="writeUpHeader">Overview</h3>
             <p>
-                Hey there, future Tim here. This is a post-mortem of my first project, an
-                <a href="http://www.issue-tracker-app.com/" target='_blank' rel="noopener noreferrer">Issue Tracker app</a>.
-                I'm writing this after having a few more projects under my belt.
-                Here, I'll be touching on more of the nuts and bolts of the project.
-                For something more sophisticated check out my write-up on my 
+                Hey there, future Tim here—this is a post-mortem of my very first project, an
+                <a href="http://www.issue-tracker-app.com/" target='_blank' rel="noopener noreferrer">Issue Tracker app</a>,
+                that I created on my own after completing the freeCodeCamp.org curriculum.
+                I'm writing this after having completed a more sophisticated full-stack project, which you can check out
                 <a 
                   href="portfolio-item-poster-shop-app.html"
                   target='_blank' 
                   rel="noopener noreferrer">
-                e-commerce project</a>.
+                here</a>.
                 I've learned a lot since I worked on this code, 
                 but this project was a great exercise.
+            </p>
+            <p>
+              I was excited and nervous—staring at a blank canvas was quite daunting. 
+              Time to put it all together: React, Node, Express, and Mongoose! Let's go!
             </p>
             <p>
                 Here is what I wanted to accomplish with this project:
@@ -75,27 +78,16 @@
                 <li>Familiarize myself with a code editor and GitHub.</li>
             </ul>
             <p>
-              This was my very first project that I create entirely on my own after completing the 
-              <a 
-                href='https://www.freecodecamp.org/' 
-                target='_blank' 
-                rel='noopener noreferrer' >
-                  FreeCodeCamp.org</a> cirriculum.
-              I was excited and nervous --
-              staring at a blank canvas was quite daunting. Time to put it all together: React, Node, Express, and Mongoose.
-            </p>
-            <p>
               I decided to create an issue tracker that took inspiration from a cap-stone project 
               which I completed towards the end of my time with Free Code Camp.
-              The project would work off of a foundational concept while adding in more functionality.
+              The project would springboard off a foundational concept while adding in more functionality.
               I took the idea of a basic CRUD app and added user account creation, 
               project grouping, and shareability between users.
             </p>
             <h3 class="writeUpHeader">Challenges</h3>
             <p>
               Let's start things off by setting up a back-end route. 
-              To note, I didn't separate routes and controllers on this project -- 
-              something I would do now that I have more experience.
+              To note, I didn't separate routes and controllers on this project—something I would do now that I have more experience.
             </p>            
             <pre>
 <code><span class="const">const</span> <span class="variable">router</span> = <span class="variable">require</span>(<span class="plainText">'express'</span>).<span class="function">Router</span>()
@@ -149,7 +141,7 @@
                 target='_blank' 
                 rel='noopener noreferrer' >
                   here</a>. One thing I want to call out is that my back-end code for this project is doing some nested actions.
-                  Knowing what I know now, if I were to implement testing I would write things a little bit 
+                  Knowing what I know now, if I were to implement testing, I would write things a little bit 
                   differently in order facilitate that process.
             </p>
             <p>
@@ -177,7 +169,7 @@
               appropriate reducer(s).
             </p>
             <p>
-              Over in our reducer we're adding the newly created issue into our global state 
+              Over in our reducer, we're adding the newly created issue into our global state 
               so that we can display it via its React component. We do this by combining the existing state
               (grabbed with the spread operator) and the new issue in an array:
             </p>
@@ -294,51 +286,54 @@
             </pre>
             <p>
               I've trimmed out some of the state and form parts for length's sake. I hope these code blocks help
-              illustrate an end to end trip through the app.
+              illustrate an end-to-end trip through the app.
             </p>
             <p>
               One of the challenges I encountered during this project was needing to
               simultaneously enable an issue to be edited while disabling all non-selected issues.
-              To accomplish this I created a global edit action/reducer to put the issue into edit mode,
-              in the mean time I compared the issue's ID with the global state's issues. 
-              These paired with conditional rendering did the trick.
+              To accomplish this, I created a global edit action/reducer to put the issue into edit mode,
+              in the meantime I compared the issue's ID with the global state's issues. 
+              These, paired with conditional rendering, did the trick.
             </p>
             <img class='insetImage' src="./Portfolio site/img/issue-tracker-inset.jpg" alt='a screenshot of the app'/>
             <div class="horizontalRule"></div>
             <p>
-              On to deployment. A technique I implemented to have an smoother deployment was to nest the client folder
+              On to deployment. A technique I implemented to have a smoother deployment was to nest the client folder
               within the back-end project. Each "project" then has its own package.json. 
-              This gives us two advantages.
-              First, Inside of the client's package.json
-              we assign a key "proxy" to the same port that we're using for our back-end. Now we can run the React front-end 
-              and the server via a script with<a
-                href="https://www.npmjs.com/package/concurrently"
-                target='_blank' 
-                rel='noopener noreferrer' 
-              >
-              Concurrently</a> like so:
+              This gives us two advantages:
             </p>
+              <ul class='portfolioItemList'>
+                <li>First, inside the client's package.json
+                  we assign a key "proxy" to the same port that we're using for our back-end. Now we can run the React front-end 
+                  and the server via a script with <a
+                    href="https://www.npmjs.com/package/concurrently"
+                    target='_blank' 
+                    rel='noopener noreferrer' 
+                  >
+                  Concurrently</a> like so:
+                </li>
             <pre>
 <code><span class="variable">"dev":</span> <span class="plainText">"concurrently \"npm run server\" \"npm run client\""</span></code>
             </pre>
+                <li>
+                  Second, we can <a
+                    href="https://devcenter.heroku.com/articles/nodejs-support#customizing-the-build-process"
+                    target='_blank' 
+                    rel='noopener noreferrer' 
+                  >
+                  create a postbuild script</a> which installs all of our client dependencies and creates our 
+                  React production build. After all that we can push to Heroku and cross our fingers.
+                </li>
+              </ul>
             <p>
-              Second, we can <a
-                href="https://devcenter.heroku.com/articles/nodejs-support#customizing-the-build-process"
-                target='_blank' 
-                rel='noopener noreferrer' 
-              >
-              create a postbuild script</a> which installs all of our client dependencies and creates our 
-              React production build. After all that we can push to Heroku and cross our fingers.
-            </p>
-            <p>
-              Once we succeed with our Heroku push all that's left is to set our environment variables via our Heroku
+              Once we succeed with our Heroku push, all that's left is to set our environment variables via our Heroku
               dashboard!
             </p>
             <br/>
             <h3 class="writeUpHeader">Takeaways</h3>
             <p>
-                <b>React & Redux:</b> I'm really starting to enjoy and get comfortable with React. 
-                Even though this project was written with class components and I've since moved on to hooks, 
+                <b>React & Redux:</b> After this project, I found myself really starting to enjoy and get comfortable with React. 
+                Even though this project was written with class components, and I've since moved on to hooks, 
                 I was able to get in valuable general React practice through repetition. 
                 Also, now that I've experimented on a few more projects, 
                 I like the workflow of Redux despite the boiler-plate needed to get things going.
@@ -352,13 +347,16 @@
             </p>
             <p>
                 <b>Deployment:</b> All things considered, I had a really smooth experience with Heroku. 
-                It was a much more stream-lined process than other platforms that I looked into.
+                It was a much more streamlined process than other platforms that I looked into.
             </p>
             <p>
               Overall, even though I would do some things differently, 
               I learned a lot while making this app.
-              I'm happy with the overarching structure of the project -- admittedly my front-end variables 
-              could use some destructuring and tidying up. Thanks for reading! Feel free to
+              I'm happy with the overarching structure of the project—admittedly my front-end variables 
+              could use some destructuring and tidying up. 
+            </p>
+            <p>
+              Thanks for reading! Feel free to
               check out the 
               <a
                 href="https://github.com/tfmcmahon/issue-tracker" 
