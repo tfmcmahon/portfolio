@@ -110,16 +110,14 @@ strong {
     line-height: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border-radius: .25em;
+    border-radius: 3px;
     font-weight: var(--fw-bold);
-    transition: transform 200ms ease-in-out;
-    margin: 2em auto;
-    border: 1px solid var(--clr-neighbor2);
-    border-bottom-width: 2px;
+    transition: background-color 200ms ease-in-out;
+    margin: 0em;
 }
 
 .btn:hover {
-    transform: scale(1.1);
+    background-color: var(--clr-neighbor2);
 }
 
 /* Typography */
@@ -282,6 +280,7 @@ header {
 
 .intro {
     position: relative;
+    padding: 2em 2em;
 }
 
 .introImage, 
@@ -321,6 +320,14 @@ header {
         left: -1.5em;
         width: calc(100% + 1.5em)
     }
+}
+
+.resumeGithub {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 3em;
+    padding-top: 0em;
+    margin-top: 0em;
 }
 
 /* Technical Projects */
@@ -742,6 +749,18 @@ code {
         rgba(51, 74, 82, 0) 90%
     );
     margin: 2em;
+}
+
+.verticalRule {
+    width: 1px;
+    background: linear-gradient(
+        0deg, 
+        rgba(51, 74, 82, 0) 0%, 
+        var(--clr-dark) 30%, 
+        var(--clr-dark) 70%, 
+        rgba(51, 74, 82, 0) 100%
+    );
+    margin: 0em 1em;
 }
 
 .logoLinkWrapper {
