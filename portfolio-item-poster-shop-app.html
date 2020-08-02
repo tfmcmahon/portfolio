@@ -242,12 +242,12 @@
                 initially anticipated.
             </p>
             <p>
-                I originally wrote the back-end with neither asyncronous code nor try/catch blocks. 
-                You might notice that all of the code snippets above have asyncronous code in them.
+                I originally wrote the back-end with neither asynchronous code nor try/catch blocks. 
+                You might notice that all of the code snippets above have asynchronous code in them.
                 How is that possible? I refactored my back-end of course!
             </p>
             <p>
-                My refactor had two objectives. First, as mentioned, I reworked the code to be asyncronous to allow for Jest's testing workflow. 
+                My refactor had two objectives. First, as mentioned, I reworked the code to be asynchronous to allow for Jest's testing workflow. 
                 Second, I tried to eliminate callbacks within database functions. I wasn't able to completely eliminate them, 
                 but I trimmed the amount of callbacks down significantly.
                 I did this to make my Jest mocks more manageable, but I also think it makes for much more digestible code.
